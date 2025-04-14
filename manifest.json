@@ -1,0 +1,44 @@
+{
+    "short_name": "Rolete Nadzor",
+    "name": "Rolete Nadzor",
+    "start_url": ".",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/10396/10396068.png",
+            "sizes": "any",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/256/10396/10396068.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/128/10396/10396068.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/64/10396/10396068.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/32/10396/10396068.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/24/10396/10396068.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn-icons-png.flaticon.com/16/10396/10396068.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#0080ff",
+    "display": "standalone"
+}

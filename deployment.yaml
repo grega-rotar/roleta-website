@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: roleta-etiam-si
+  namespace: roleta-etiam-si
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: roleta-etiam-si
+  template:
+    metadata:
+      labels:
+        app: roleta-etiam-si
+    spec:
+      containers:
+      - name: roleta-etiam-si
+        image: docker-registry.etiam.si/roleta-etiam-si:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: roleta-api
+  namespace: roleta-etiam-si
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: roleta-api
+  template:
+    metadata:
+      labels:
+        app: roleta-api
+    spec:
+      containers:
+      - name: roleta-api
+        image: docker-registry.etiam.si/roleta-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: roleta-api-service
+  namespace: roleta-etiam-si
+spec:
+  type: ClusterIP
+  selector:
+    app: roleta-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 3000
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: roleta-etiam-si-ingress
+  namespace: roleta-etiam-si
+spec:
+  ingressClassName: nginx
+  rules:
+   - host: roleta.etiam.si
+     http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: roleta-api-service
+            port:
+              number: 8080
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: roleta-etiam-si-service
+            port:
+              number: 8080
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: roleta-history-logger
+  namespace: roleta-etiam-si
+spec:
+  containers:
+  - name: roleta-history-logger
+    image: docker-registry.etiam.si/roleta-history-logger

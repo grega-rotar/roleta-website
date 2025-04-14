@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://kit.fontawesome.com/8c174fdda5.js" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+    <title>Roleta</title>
+    <style>
+        body,
+        html {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+        }
+
+        .two-eights {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .five-eights {
+            flex: 5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .one-eight {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid #999; */
+        }
+
+        .content button {
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgb(112, 112, 112);
+            cursor: pointer;
+            font-size: 4rem;
+            /* background-color: #e3f1ff; */
+            /* color: #000000; */
+        }
+
+        .slider-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            /* z-index: -3; */
+            /* margin: 0 auto; */
+            /* Center the slider */
+        }
+
+        .slider {
+            position: absolute;
+            -webkit-appearance: none;
+            /* width: 50px;
+            height: 100px; */
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            /* transform-origin: left; */
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10%;
+            height: 5000px;
+            background: #04AA6D;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 10%;
+            height: 5000px;
+            background: #04AA6D;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="one-eight w-full">
+            <div class="content">
+                <div class="slider-container">
+                    <input type="range" min="0" max="255" class="slider" oninput="setLightIntensity(this)">
+                </div>
+            </div>
+        </div>
+        <div class="five-eights w-full">
+            <div class="content">
+                <button etiamsi-rcuid="rcuid01" etiamsi-command="1" onclick="commandRoleta(this)"
+                    style="color: rgb(34 197 94);"><i class="fa-solid fa-up-long"></i></button>
+            </div>
+            <div class="content">
+                <button etiamsi-rcuid="rcuid01" etiamsi-command="0" onclick="commandRoleta(this)"
+                    style="color: rgb(239 68 68);"><i class="fa-solid fa-stop"></i></button>
+            </div>
+            <div class="content">
+                <button etiamsi-rcuid="rcuid01" etiamsi-command="2" onclick="commandRoleta(this)"
+                    style="color: rgb(59 130 246);"><i class="fa-solid fa-down-long"></i></button>
+            </div>
+        </div>
+        <div class="two-eights w-full">
+            <div class="content">
+                <button etiamsi-rcuid="rcuid02" etiamsi-command="1" onclick="commandRoleta(this)"
+                    style="color: rgb(34 197 94);"><i class="fa-solid fa-up-long"></i></button>
+            </div>
+            <div class="content">
+                <button etiamsi-rcuid="rcuid02" etiamsi-command="0" onclick="commandRoleta(this)"
+                    style="color: rgb(239 68 68);"><i class="fa-solid fa-stop"></i></button>
+            </div>
+            <div class="content">
+                <button etiamsi-rcuid="rcuid02" etiamsi-command="2" onclick="commandRoleta(this)"
+                    style="color: rgb(59 130 246);"><i class="fa-solid fa-down-long"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setSliderSizeToContainerDimensions() {
+            // Select all elements with the class name 'slider-container'
+            const sliderContainers = document.querySelectorAll('.slider-container');
+
+            // Loop through each slider container
+            sliderContainers.forEach(container => {
+                // Select the slider element inside this container
+                const slider = container.querySelector('.slider');
+
+                // Check if both container and slider exist
+                if (container && slider) {
+                    // Get the bounding rectangle of the container
+                    const containerRect = container.getBoundingClientRect();
+                    console.log(containerRect);
+
+                    // Set the width of the slider to the height of the container
+                    slider.style.width = containerRect.height + 'px';
+
+                    // Set the height of the slider to the width of the container
+                    slider.style.height = containerRect.width + 'px';
+                }
+            });
+        }
+
+        // Call the function when the page is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            setSliderSizeToContainerDimensions(); // Execute initially when DOM is loaded
+
+            window.addEventListener('resize', function () {
+                setSliderSizeToContainerDimensions(); // Execute whenever window is resized
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
